@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/ic_home"
+        android:title="Inici" />
+
+    <item
+        android:id="@+id/navigation_favorits"
+        android:icon="@drawable/ic_favorite"
+        android:title="Favorits" />
+
+    <item
+        android:id="@+id/navigation_crear"
+        android:icon="@drawable/ic_add"
+        android:title="Crear" />
+
+    <item
+        android:id="@+id/navigation_missatges"
+        android:icon="@drawable/ic_messages"
+        android:title="Xat" />
+
+    <item
+        android:id="@+id/navigation_perfil"
+        android:icon="@drawable/ic_account"
+        android:title="Perfil" />
+
+</menu>

@@ -1,0 +1,50 @@
+<resources>
+    <string name="app_name">FixLoop</string>
+    <string name="slogan">Don\'t replace it.\nKeep it in the loop.</string>
+
+
+    <!-- ============================== -->
+    <!-- PANTALLA: LOGIN                -->
+    <!-- ============================== -->
+
+    <string name="login_title">Inici de sessió</string>
+    <string name="login_subtitle">Introdueix el teu correu electronic i contrasenya per iniciar sessió</string>
+
+    <string name="login_hint_email">Correu electrònic</string>
+    <string name="login_hint_pass">Contrasenya</string>
+
+    <string name="login_btn_enter">Iniciar sessió</string>
+    <string name="login_btn_register">Registrar-se</string>
+
+    <!-- ============================== -->
+    <!-- PANTALLA: REGISTRE             -->
+    <!-- ============================== -->
+
+    <string name="register_title">Crear un compte</string>
+    <string name="register_title_2">Completa el teu perfil</string>
+    <string name="register_subtitle">Introdueix el teu correu electrònic per crear un compte a FixLoop</string>
+
+    <string name="register_hint_name">Nom complet</string>
+    <string name="register_hint_email">Correu electrònic</string>
+    <string name="register_hint_pass">Contrasenya</string>
+    <string name="register_hint_pass_confirm">Confirmar contrasenya</string>
+
+    <string name="register_radio_client">Sóc Client (Tinc coses trencades)</string>
+    <string name="register_radio_repairer">Sóc Reparador (Vull arreglar coses)</string>
+
+    <string name="register_btn_submit">Crear Compte</string>
+    <string name="register_lbl_has_account">Ja tens compte?</string>
+    <string name="register_btn_login">Inicia sessió</string>
+
+    <!-- ============================== -->
+    <!-- MISSATGES GLOBALS              -->
+    <!-- ============================== -->
+
+    <string name="error_empty_fields">Si us plau, omple tots els camps.</string>
+    <string name="error_pass_mismatch">Les contrasenyes no coincideixen.</string>
+    <string name="error_network">Error de connexió amb el servidor.</string>
+    <string name="msg_loading">Carregant...</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+</resources>

@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="24dp"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="40dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/ivLogo"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/ic_fixloop" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:fontFamily="@font/inter_semibold"
+            android:gravity="center_horizontal"
+            android:text="@string/slogan"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+    <ViewFlipper
+        android:id="@+id/viewFlipper"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inAnimation="@android:anim/slide_in_left"
+        android:outAnimation="@android:anim/slide_out_right"
+        tools:displayedChild="1">
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/register_title"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="26dp"
+                    android:text="@string/register_subtitle"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/etEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@drawable/fons_input"
+                    android:ems="10"
+                    android:hint="@string/register_hint_email"
+                    android:inputType="textEmailAddress"
+                    android:padding="12dp"
+                    android:textSize="12sp" />
+
+                <Button
+                    android:id="@+id/btnContinue"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:text="Continuar"
+                    android:textSize="12sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:layout_marginBottom="18dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_weight="1"
+                        android:background="#E0E0E0" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:text="O"
+                        android:textColor="#999999"
+                        android:textSize="12sp" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_weight="1"
+                        android:background="#E0E0E0" />
+
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/btnGoToLogin"
+                    style="@style/BotoSecundari"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:text="@string/register_btn_login"
+
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </ScrollView>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:text="Completa el teu perfil"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+
+            <FrameLayout
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginBottom="20dp">
+
+                <ImageView
+                    android:id="@+id/ivProfilePic"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#EEEEEE"
+                    android:padding="24dp"
+                    android:scaleType="centerCrop"
+                    android:src="@android:drawable/ic_menu_camera" />
+
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="bottom|end"
+                    android:background="@drawable/fons_input"
+                    android:src="@android:drawable/ic_menu_edit" />
+            </FrameLayout>
+
+            <EditText
+                android:id="@+id/etNom"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/fons_input"
+                android:hint="@string/register_hint_name"
+                android:inputType="textPersonName"
+                android:padding="12dp"
+                android:textSize="12sp" />
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                app:boxBackgroundMode="none"
+                app:endIconMode="password_toggle"
+                app:hintEnabled="false">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:background="@drawable/fons_input"
+                    android:hint="@string/login_hint_pass"
+                    android:inputType="textPassword"
+                    android:paddingStart="12dp"
+                    android:paddingTop="12dp"
+                    android:paddingEnd="45dp"
+                    android:textSize="12sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                app:boxBackgroundMode="none"
+                app:endIconMode="password_toggle"
+                app:hintEnabled="false">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etRepeatPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:background="@drawable/fons_input"
+                    android:hint="@string/register_hint_pass_confirm"
+                    android:inputType="textPassword"
+                    android:paddingStart="12dp"
+                    android:paddingTop="12dp"
+                    android:paddingEnd="45dp"
+                    android:textSize="12sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <RadioGroup
+                android:id="@+id/rgTipus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp">
+
+                <RadioButton
+                    android:id="@+id/rbClient"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="@string/register_radio_client"
+                    android:textSize="12sp" />
+
+                <RadioButton
+                    android:id="@+id/rbReparador"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/register_radio_repairer"
+                    android:textSize="12sp" />
+            </RadioGroup>
+
+            <Button
+                android:id="@+id/btnRegisterFinal"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:text="@string/register_btn_submit"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+        </ScrollView>
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+        <!-- PAS 3: DETALLS REPARADOR (Índex 2) -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Perfil de Reparador"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:layout_marginBottom="16dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Explica què saps fer:"
+                android:layout_marginBottom="8dp"/>
+
+            <EditText
+                android:id="@+id/etDescripcio"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:background="@drawable/fons_input"
+                android:gravity="top|start"
+                android:padding="12dp"
+                android:textSize="12sp"
+                android:hint="Sóc especialista en reparar mòbils i ordinadors..."
+                android:inputType="textMultiLine"
+                android:layout_marginBottom="20dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Categories:"
+                android:layout_marginBottom="8dp"/>
+
+            <!-- Checkboxes per categories -->
+            <!-- Nota: Idealment això es carregaria dinàmicament de l'API,
+                 però per ara ho posem estàtic o fem un layout buit per omplir per codi -->
+            <LinearLayout
+                android:id="@+id/llCategoriesCheckboxes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="20dp">
+                <!-- Aquí afegirem CheckBox per codi Java -->
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btnFinalitzarReparador"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:text="Crear Perfil Reparador"
+                android:backgroundTint="@color/fixloop_green"
+                android:textColor="@color/white"/>
+
+        </LinearLayout>
+        </ScrollView>
+    </ViewFlipper>
+
+</LinearLayout>

@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:background="#FFFFFF">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:paddingStart="24dp"
+        android:paddingTop="24dp"
+        android:paddingEnd="24dp"
+        android:paddingBottom="80dp">
+
+        <!-- FOTO PERFIL -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            app:cardCornerRadius="60dp"
+            app:cardElevation="4dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="16dp">
+
+            <ImageView
+                android:id="@+id/ivPerfilUser"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@android:drawable/ic_menu_myplaces"
+                android:scaleType="centerCrop"/>
+        </androidx.cardview.widget.CardView>
+
+        <!-- NOM I EMAIL -->
+        <TextView
+            android:id="@+id/tvNomPerfil"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nom Usuari"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:id="@+id/tvEmailPerfil"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="usuari@exemple.com"
+            android:textSize="14sp"
+            android:textColor="#666666"
+            android:layout_marginBottom="8dp"/>
+
+        <!-- ETIQUETA ROL -->
+        <TextView
+            android:id="@+id/tvRolBadge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CLIENT"
+            android:background="@drawable/border_pro"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="4dp"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_marginBottom="32dp"/>
+
+        <!-- SECCIÓ OPCIONS -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/fons_input"
+            android:backgroundTint="#f5f5f5"
+            android:padding="16dp"
+            android:elevation="2dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="El meu compte"
+                android:textStyle="bold"
+                android:layout_marginBottom="16dp"/>
+
+            <!-- OPCIÓ EDITAR (Comú) -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Editar dades personals"
+                android:drawableStart="@android:drawable/ic_menu_edit"
+                android:drawablePadding="16dp"
+                android:paddingVertical="12dp"
+                android:gravity="center_vertical"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#EEEEEE"/>
+
+            <!-- OPCIÓ NOMÉS CLIENT: Les meves sol·licituds -->
+            <TextView
+                android:id="@+id/btnGestioSolicituds"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Les meves sol·licituds"
+                android:drawableStart="@android:drawable/ic_menu_sort_by_size"
+                android:drawablePadding="16dp"
+                android:paddingVertical="12dp"
+                android:gravity="center_vertical"
+                android:visibility="gone"/>
+
+            <!-- OPCIÓ NOMÉS REPARADOR: Habilitats -->
+            <TextView
+                android:id="@+id/btnGestioReparador"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Gestionar les meves habilitats"
+                android:drawableStart="@android:drawable/ic_menu_agenda"
+                android:drawablePadding="16dp"
+                android:paddingVertical="12dp"
+                android:gravity="center_vertical"
+                android:visibility="gone"/>
+
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <!-- BOTÓ TANCAR SESSIÓ -->
+        <Button
+            android:id="@+id/btn_logout"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="Tancar Sessió"
+            android:backgroundTint="#FFEBEE"
+            android:textColor="#D32F2F"
+            android:layout_marginTop="32dp"
+            style="@style/Widget.MaterialComponents.Button.TextButton"/>
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

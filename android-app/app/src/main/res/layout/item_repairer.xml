@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginVertical="8dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="4dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="16dp">
+
+        <!-- Imatge de fons/perfil -->
+        <ImageView
+            android:id="@+id/ivReparadorImage"
+            android:layout_width="0dp"
+            android:layout_height="140dp"
+            android:scaleType="centerCrop"
+            android:src="@android:drawable/ic_menu_gallery"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Nom del Reparador -->
+        <TextView
+            android:id="@+id/tvReparadorName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="8dp"
+            android:text="Nom Reparador"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ivReparadorImage" />
+
+        <!-- Categoria (Text verd a la dreta) -->
+        <TextView
+            android:id="@+id/tvCategory"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="8dp"
+            android:text="Categoria"
+            android:textColor="#4CAF50"
+            android:textSize="12sp"
+            android:gravity="end"
+            android:ellipsize="end"
+            android:maxLines="1"
+            app:layout_constraintBaseline_toBaselineOf="@id/tvReparadorName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tvReparadorName"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constrainedWidth="true" />
+
+        <!-- BLOC VALORACIÓ I DISTÀNCIA (SEPARATS) -->
+
+        <!-- Icona Estrella -->
+        <ImageView
+            android:id="@+id/ivStar"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginTop="4dp"
+            android:src="@android:drawable/btn_star_big_on"
+            app:tint="#FFC107"
+            app:layout_constraintStart_toStartOf="@id/tvReparadorName"
+            app:layout_constraintTop_toBottomOf="@id/tvReparadorName" />
+
+        <!-- Text Valoració (Ex: 4.8 (50)) -->
+        <TextView
+            android:id="@+id/tvRating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="4.8 (50)"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@id/ivStar"
+            app:layout_constraintStart_toEndOf="@id/ivStar"
+            app:layout_constraintTop_toTopOf="@id/ivStar" />
+
+        <!-- Text Distància (Ex: • 2 km) -->
+        <TextView
+            android:id="@+id/tvDistance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="• 2 km"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@id/tvRating"
+            app:layout_constraintStart_toEndOf="@id/tvRating"
+            app:layout_constraintTop_toTopOf="@id/tvRating" />
+
+        <!-- ETIQUETA PRO -->
+        <TextView
+            android:id="@+id/badgePro"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/border_pro"
+            android:paddingHorizontal="42dp"
+            android:paddingVertical="8dp"
+            android:text="Pro"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/ivStar"
+            app:layout_constraintTop_toBottomOf="@id/ivStar" />
+
+        <!-- Icona Cor (Favorit) -->
+        <ImageView
+            android:id="@+id/btnFavorite"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/ic_favorite_outlined"
+            app:layout_constraintBottom_toBottomOf="@id/btnMessage"
+            app:layout_constraintEnd_toStartOf="@id/btnMessage"
+            app:layout_constraintTop_toTopOf="@id/btnMessage"
+            app:tint="#008800"/>
+
+        <!-- Botó Missatge -->
+        <Button
+            android:id="@+id/btnMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:backgroundTint="#008000"
+            android:text="Missatge"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            app:cornerRadius="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvDistance" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

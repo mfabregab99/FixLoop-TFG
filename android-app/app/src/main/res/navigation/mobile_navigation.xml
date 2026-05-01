@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_home">
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.marcal.fixloop.ui.home.HomeFragment"
+        android:label="Inici"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/navigation_favorits"
+        android:name="com.marcal.fixloop.ui.favorites.FavoritesFragment"
+        android:label="Favorits"
+        tools:layout="@layout/fragment_favorites" />
+
+    <fragment
+        android:id="@+id/navigation_crear"
+        android:name="com.marcal.fixloop.ui.create.CreateRequestFragment"
+        android:label="Crear Anunci"
+        tools:layout="@layout/fragment_create_request" />
+
+    <fragment
+        android:id="@+id/navigation_missatges"
+        android:name="com.marcal.fixloop.ui.inbox.InboxFragment"
+        android:label="Missatges"
+        tools:layout="@layout/fragment_inbox" />
+
+    <fragment
+        android:id="@+id/navigation_perfil"
+        android:name="com.marcal.fixloop.ui.profile.ProfileFragment"
+        android:label="Perfil"
+        tools:layout="@layout/fragment_profile" />
+
+</navigation>

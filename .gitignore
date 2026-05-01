@@ -1,0 +1,30 @@
+# =========================
+# ANDROID STUDIO & GRADLE
+# =========================
+*.iml
+.gradle/
+.idea/
+/android-app/local.properties
+/android-app/.idea/
+/android-app/.gradle/
+/android-app/build/
+/android-app/app/build/
+captures/
+.externalNativeBuild/
+.cxx/
+
+# Keystore files (Si algun dia generes contrasenyes per a la Play Store)
+*.jks
+*.keystore
+
+# =========================
+# BACKEND API (PHP)
+# =========================
+# Pots posar aquí els arxius de configuració si tenen contrasenyes reals
+# /backend-api/db_connect.php
+
+# =========================
+# SISTEMA OPERATIU
+# =========================
+.DS_Store
+Thumbs.db
