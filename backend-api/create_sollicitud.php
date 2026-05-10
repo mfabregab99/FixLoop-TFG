@@ -7,22 +7,22 @@ $response = array();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-    // 1. Validar camps obligatoris
-    // L'Android ens envia 'user_id', 'titol', 'descripcio' i 'categoria_id'
+    // Validar camps obligatoris enviats des de l'Android
     if (isset($_POST['user_id']) && isset($_POST['titol']) && isset($_POST['descripcio']) && isset($_POST['categoria_id'])) {
         
-        $usuari_id = $_POST['user_id']; // Mapeig: App(user_id) -> BD(usuari_id)
+        $usuari_id = $_POST['user_id']; 
         $titol = $_POST['titol'];
         $descripcio = $_POST['descripcio'];
         $categoria_id = $_POST['categoria_id'];
         
-        // 2. Gestió de la Imatge
-        $foto_url = ""; 
+        // Gestió de la Imatge
+        $db_filename = ""; // Guardarem el nom del fitxer
         if (isset($_FILES['imatge']) && $_FILES['imatge']['error'] === UPLOAD_ERR_OK) {
             $tmp_name = $_FILES['imatge']['tmp_name'];
             $name = basename($_FILES['imatge']['name']);
             $ext = pathinfo($name, PATHINFO_EXTENSION);
-            // Generem un nom únic
+            
+            // Generem un nom únic per al fitxer
             $filename = "sollicitud_" . time() . "_" . uniqid() . "." . $ext;
             
             $upload_dir = __DIR__ . "/uploads/";
@@ -31,18 +31,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $target_file = $upload_dir . $filename;
             
             if (move_uploaded_file($tmp_name, $target_file)) {
-                // Construïm la URL completa
-                $foto_url = "https://eimtcms.eimt.uoc.edu/~mfabregab99/api/uploads/" . $filename;
+                $db_filename = $filename;
             }
         }
 
-        // 3. Insertar a la Base de Dades
-        // Utilitzem els noms REALS de les teves columnes: usuari_id, foto_url
-        $sql = "INSERT INTO sollicituds (usuari_id, categoria_id, titol, descripcio, foto_url, data_creacio, estat) VALUES (?, ?, ?, ?, ?, NOW(), 'oberta')";
+        // Insertar a la Base de Dades
+        $sql = "INSERT INTO sollicituds (usuari_id, categoria_id, titol, descripcio, foto_url, data_creacio, estat) 
+                VALUES (?, ?, ?, ?, ?, NOW(), 'oberta')";
         
         $stmt = $conn->prepare($sql);
-        // "iisss" vol dir: integer, integer, string, string, string
-        $stmt->bind_param("iisss", $usuari_id, $categoria_id, $titol, $descripcio, $foto_url);
+        $stmt->bind_param("iisss", $usuari_id, $categoria_id, $titol, $descripcio, $db_filename);
         
         if ($stmt->execute()) {
             $response['status'] = 'success';

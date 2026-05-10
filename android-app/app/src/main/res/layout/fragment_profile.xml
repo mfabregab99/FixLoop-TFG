@@ -43,14 +43,7 @@
             android:textStyle="bold"
             android:textColor="@color/black"/>
 
-        <TextView
-            android:id="@+id/tvEmailPerfil"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="usuari@exemple.com"
-            android:textSize="14sp"
-            android:textColor="#666666"
-            android:layout_marginBottom="8dp"/>
+
 
         <!-- ETIQUETA ROL -->
         <TextView
@@ -83,16 +76,19 @@
                 android:textStyle="bold"
                 android:layout_marginBottom="16dp"/>
 
-            <!-- OPCIÓ EDITAR (Comú) -->
+            <!-- OPCIÓ EDITAR -->
             <TextView
+                android:id="@+id/btnEditarPerfil"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Editar dades personals"
                 android:drawableStart="@android:drawable/ic_menu_edit"
                 android:drawablePadding="16dp"
                 android:paddingVertical="12dp"
-                android:gravity="center_vertical"/>
-
+                android:gravity="center_vertical"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackground"/>
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
@@ -139,6 +135,23 @@
             android:textColor="#D32F2F"
             android:layout_marginTop="32dp"
             style="@style/Widget.MaterialComponents.Button.TextButton"/>
+
+        <!-- BOTÓ D'ELIMINAR COMPTE -->
+        <TextView
+            android:id="@+id/btn_eliminar_compte"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Eliminar el meu compte"
+            android:textColor="#9E9E9E"
+            android:textSize="13sp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="16dp"
+            android:padding="8dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackground"/>
+
+
 
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

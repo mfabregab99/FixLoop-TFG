@@ -92,17 +92,25 @@ public class RepairerAdapter extends RecyclerView.Adapter<RepairerAdapter.Repair
 
         // --- Carregar Imatge ---
         if (user.getProfilePhotoUrl() != null && !user.getProfilePhotoUrl().isEmpty()) {
+
+            // Concatenem la URL base de les pujades amb el nom del fitxer de la BD
+            String fullUrl = RetrofitClient.UPLOADS_URL + user.getProfilePhotoUrl();
+
             Glide.with(context)
-                    .load(user.getProfilePhotoUrl())
+                    .load(fullUrl) // carreguem la ruta completa
                     .placeholder(android.R.drawable.ic_menu_gallery)
+                    .circleCrop()
                     .into(holder.ivImage);
+        } else {
+            // Si no té foto, posem una imatge per defecte
+            holder.ivImage.setImageResource(R.drawable.ic_account);
         }
 
         // --- Lògica Botó Missatge (Iniciar Xat) ---
         holder.btnMessage.setOnClickListener(v -> {
             holder.btnMessage.setEnabled(false); // Evitem doble clic
 
-            // Creem petició de xat: (jo, ell, sense sol·licitud)
+            // Creem petició de xat: (sense sol·licitud)
             StartChatRequest request = new StartChatRequest(currentUserId, user.getId(), 0);
 
             RetrofitClient.getInstance().getMyApi().startChat(request).enqueue(new Callback<StartChatResponse>() {

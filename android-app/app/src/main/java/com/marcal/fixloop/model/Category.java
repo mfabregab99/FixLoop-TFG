@@ -2,18 +2,15 @@ package com.marcal.fixloop.model;
 
 import com.google.gson.annotations.SerializedName;
 
-/**
- * Model que representa una categoria de reparació (Ex: Electrònica, Roba...)
- */
 public class Category {
 
     private int id;
 
-
     @SerializedName("nom")
     private String name;
 
-    // --- Getters ---
+    // Camp local per gestionar la UI
+    private boolean isSelected = false;
 
     public int getId() {
         return id;
@@ -23,12 +20,14 @@ public class Category {
         return name;
     }
 
-    // --- Mètodes auxiliars ---
+    public boolean isSelected() {
+        return isSelected;
+    }
 
-    /**
-     * Retorna el nom de la categoria quan es converteix a text
-     * Útil per a Spinners o Logs
-     */
+    public void setSelected(boolean selected) {
+        isSelected = selected;
+    }
+
     @Override
     public String toString() {
         return name;

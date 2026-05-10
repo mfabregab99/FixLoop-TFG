@@ -34,5 +34,10 @@
         android:name="com.marcal.fixloop.ui.profile.ProfileFragment"
         android:label="Perfil"
         tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/navigation_my_requests"
+        android:name="com.marcal.fixloop.ui.repairs.MyRequestsFragment"
+        android:label="Les meves sol·licituds"
+        tools:layout="@layout/fragment_my_requests" />
 
 </navigation>

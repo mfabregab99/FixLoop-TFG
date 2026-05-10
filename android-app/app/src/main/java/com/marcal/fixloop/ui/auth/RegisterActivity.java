@@ -174,6 +174,7 @@ public class RegisterActivity extends AppCompatActivity {
             }
             @Override
             public void onFailure(Call<AuthResponse> call, Throwable t) {
+                android.util.Log.e("API_ERROR", "Error a checkEmail: " + t.getMessage(), t);
                 Toast.makeText(RegisterActivity.this, "Error de connexió", Toast.LENGTH_SHORT).show();
             }
         });

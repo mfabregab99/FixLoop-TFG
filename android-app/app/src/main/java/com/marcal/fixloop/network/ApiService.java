@@ -66,6 +66,32 @@ public interface ApiService {
     // --- DADES PRINCIPALS ---
 
     /**
+     * Obté les dades completes del perfil de l'usuari actual
+     */
+    @POST("get_profile.php")
+    Call<User> getProfile(@Body IdRequest request);
+
+    /**
+     * Actualitza les dades del perfil d'un ausuari
+     * Utilitza multipart per si l'usuari canvia la foto (pot ser null si no canvia la foto)
+     */
+    @Multipart
+    @POST("update_profile.php")
+    Call<AuthResponse> updateProfile(
+            @Part("user_id") RequestBody userId,
+            @Part("nom_complet") RequestBody fullName,
+            @Part("password") RequestBody password,
+            @Part("descripcio") RequestBody description,
+            @Part("categories") RequestBody categories,
+            @Part MultipartBody.Part photo
+    );
+    /**
+     * Elimina el compte d'un usuari i totes les seves dades associades
+     */
+    @POST("delete_account.php")
+    Call<AuthResponse> deleteAccount(@Body IdRequest request);
+
+    /**
      * Obté la llista d'usuaris (filtra per rol 'reparador' al backend)
      * @param request Petició amb l'ID de l'usuari actual (per saber si són favorits)
      */
@@ -112,6 +138,34 @@ public interface ApiService {
      */
     @POST("get_sollicituds.php")
     Call<List<RepairRequest>> getRepairRequests();
+
+    /**
+     * Obté la llista d'anuncis de l'usuari acual
+     */
+    @POST("get_my_sollicituds.php")
+    Call<List<RepairRequest>> getMyRepairRequests(@Body IdRequest request);
+
+    /**
+     * Actualitza un anunci existent
+     */
+    @Multipart
+    @POST("update_sollicitud.php")
+    Call<AuthResponse> updateRepairRequest(
+            @Part("sollicitud_id") RequestBody sollicitudId,
+            @Part("titol") RequestBody title,
+            @Part("descripcio") RequestBody description,
+            @Part("categoria_id") RequestBody categoryId,
+            @Part MultipartBody.Part image
+    );
+    /**
+     * Elimina un anunci específic
+     * (Reaprofitant el model IdRequest passant-li l'ID de la sol·licitud en lloc de id de l'usuari)
+     */
+    @POST("delete_sollicitud.php")
+    Call<AuthResponse> deleteRepairRequest(@Body IdRequest request);
+
+    @POST("update_profile.php")
+    Call<AuthResponse> updateRepairerCategories(@Body com.marcal.fixloop.model.SkillUpdateRequest request);
 
     // --- MISSATGERIA ---
 

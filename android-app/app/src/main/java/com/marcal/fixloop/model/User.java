@@ -10,6 +10,7 @@ public class User {
 
     private int id;
 
+
     @SerializedName("nom_complet")
     private String fullName;
 
@@ -37,11 +38,19 @@ public class User {
     @SerializedName("llista_categories")
     private String categoryListString;
 
+    @SerializedName("descripcio")
+    private String description;
+
+    @SerializedName("categories_ids")
+    private String categoriesIds;
+
     // Latitud i Longitud (per al futur mapa)
     private double latitud;
     private double longitud;
 
     // --- Getters i Setters ---
+
+    public String getDescription() { return description;}
 
     public int getId() {
         return id;
@@ -69,6 +78,14 @@ public class User {
 
     public String getCategoryListString() {
         return categoryListString;
+    }
+
+    public String getCategories() {
+        return categoryListString;
+    }
+
+    public String getCategoriesIds() {
+        return categoriesIds;
     }
 
     public boolean isFavorite() {

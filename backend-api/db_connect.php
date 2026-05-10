@@ -1,9 +1,9 @@
 <?php
 // Dades de connexió
-$servername = "localhost";
-$username   = "mfabregab99"; 
-$password   = "nHFOZ8RF";
-$dbname     = "mfabregab99";
+$servername = "db";
+$username   = "root"; 
+$password   = "root";
+$dbname     = "fixloop_db";
 
 // Crear connexió
 $conn = new mysqli($servername, $username, $password, $dbname);

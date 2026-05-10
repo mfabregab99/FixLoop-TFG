@@ -10,8 +10,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitClient {
 
     // URL base de l'API
-    private static final String BASE_URL = "https://eimtcms.eimt.uoc.edu/~mfabregab99/api/";
-
+    //private static final String BASE_URL = "https://eimtcms.eimt.uoc.edu/~mfabregab99/api/";
+    // url base temporal pel funcionament en local
+    private static final String BASE_URL = "http://192.168.50.225/";
+    public static final String UPLOADS_URL = BASE_URL + "uploads/";
     private static RetrofitClient instance = null;
     private ApiService myApi;
 

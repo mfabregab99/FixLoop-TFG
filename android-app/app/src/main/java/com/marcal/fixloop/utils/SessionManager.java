@@ -21,6 +21,7 @@ public class SessionManager {
     private static final String KEY_NAME = "name";
     private static final String KEY_TYPE = "type";
     private static final String KEY_PHOTO = "photo_url";
+    private static final String KEY_CATEGORIES = "user_categories";
 
     private SharedPreferences pref;
     private SharedPreferences.Editor editor;
@@ -37,16 +38,18 @@ public class SessionManager {
      * @param user Objecte User rebut del servidor
      */
     public void createLoginSession(User user) {
-        editor.putBoolean(KEY_IS_LOGGED_IN, true);
-        editor.putInt(KEY_ID, user.getId());
-        editor.putString(KEY_EMAIL, user.getEmail());
+        SharedPreferences.Editor freshEditor = pref.edit();
+        freshEditor.putBoolean(KEY_IS_LOGGED_IN, true);
+        freshEditor.putInt(KEY_ID, user.getId());
+        freshEditor.putString(KEY_EMAIL, user.getEmail());
+        freshEditor.putString(KEY_NAME, user.getFullName());
+        freshEditor.putString(KEY_TYPE, user.getType());
+        freshEditor.putString(KEY_PHOTO, user.getProfilePhotoUrl());
 
-        // Utilitzem els getters del model User
-        editor.putString(KEY_NAME, user.getFullName());
-        editor.putString(KEY_TYPE, user.getType());
-        editor.putString(KEY_PHOTO, user.getProfilePhotoUrl());
+        // Guardem el string de categories
+        freshEditor.putString(KEY_CATEGORIES, user.getCategoryListString());
 
-        editor.apply(); // Guardem els canvis de manera asíncrona
+        freshEditor.apply();
     }
 
     /**
@@ -85,5 +88,9 @@ public class SessionManager {
 
     public String getUserPhoto() {
         return pref.getString(KEY_PHOTO, null);
+    }
+
+    public String getUserCategories() {
+        return pref.getString(KEY_CATEGORIES, "");
     }
 }

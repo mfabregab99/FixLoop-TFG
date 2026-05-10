@@ -16,19 +16,11 @@ import java.io.InputStream;
 
 /**
  * Classe d'utilitat per a la gestió i processament d'imatges
- * S'encarrega de llegir imatges de la galeria, corregir la seva orientació (EXIF)
- * i guardar-les com a fitxers temporals optimitzats per a la pujada al servidor
+ * S'encarrega de llegir imatges de la galeria, reduir-les, corregir
+ * la seva orientació i guardar-les comprimides
  */
 public class ImageUtils {
 
-    /**
-     * Crea un fitxer temporal a la memòria cau de l'aplicació a partir d'una URI
-     * Processa la imatge per corregir la rotació si és necessari i la comprimeix
-     *
-     * @param context Context de l'aplicació
-     * @param uri Identificador únic de la imatge seleccionada
-     * @return Objecte File apuntant a la imatge processada, o null si hi ha error
-     */
     public static File getFileFromUri(Context context, Uri uri) {
         try {
             // Obtenim el nom del fitxer original
@@ -37,8 +29,7 @@ public class ImageUtils {
             // Creem un fitxer buit a la carpeta cache de l'app
             File tempFile = new File(context.getCacheDir(), fileName);
 
-            // Llegim orientació (EXIF)
-            // Obrim un Stream específic només per llegir les metadades abans de descodificar
+            // Llegim l'orientació (EXIF) abans de processar els píxels
             InputStream inputForExif = context.getContentResolver().openInputStream(uri);
             int orientation = ExifInterface.ORIENTATION_NORMAL;
 
@@ -53,25 +44,56 @@ public class ImageUtils {
                 }
             }
 
-            // Llegir imatge (els pixels)
+            // Llegim la imatge original (sense compressió)
             InputStream inputForDecode = context.getContentResolver().openInputStream(uri);
             if (inputForDecode == null) return null;
 
-            Bitmap bitmap = BitmapFactory.decodeStream(inputForDecode);
+            Bitmap originalBitmap = BitmapFactory.decodeStream(inputForDecode);
             inputForDecode.close();
 
-            if (bitmap == null) return null;
+            if (originalBitmap == null) return null;
 
-            // Aplicar rotació
-            // Si l'EXIF diu que està girada, la girem
-            bitmap = rotateBitmap(bitmap, orientation);
+            // Calculem l'escala per fer la foto més petita
+            int maxWidth = 800;
+            int maxHeight = 800;
+            float scale = Math.min(((float)maxWidth / originalBitmap.getWidth()), ((float)maxHeight / originalBitmap.getHeight()));
 
-            // Guardar imatge corregida i comprimida
+            // 4. Creem una matriu per aplicar l'escala i la rotació
+            Matrix matrix = new Matrix();
+
+            // Apliquem la reducció si és necessari
+            if (scale < 1) {
+                matrix.postScale(scale, scale);
+            }
+
+            // Apliquem la rotació
+            switch (orientation) {
+                case ExifInterface.ORIENTATION_ROTATE_90:
+                    matrix.postRotate(90);
+                    break;
+                case ExifInterface.ORIENTATION_ROTATE_180:
+                    matrix.postRotate(180);
+                    break;
+                case ExifInterface.ORIENTATION_ROTATE_270:
+                    matrix.postRotate(270);
+                    break;
+            }
+
+            //Creem la imatge final ja rotada i petita
+            Bitmap finalBitmap = Bitmap.createBitmap(originalBitmap, 0, 0, originalBitmap.getWidth(), originalBitmap.getHeight(), matrix, true);
+
+            // Alliberem la imatge original de la memòria per no col·lapsar l'app
+            if (finalBitmap != originalBitmap) {
+                originalBitmap.recycle();
+            }
+
+            // Guardar la imatge comprimida
             FileOutputStream out = new FileOutputStream(tempFile);
 
-            // Comprimim a JPG 80% per reduir mida mantenint qualitat
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 80, out);
+            // Comprimim a JPG 80% per reduir mida mantenint una qualitat decent
+            finalBitmap.compress(Bitmap.CompressFormat.JPEG, 80, out);
 
+            out.flush();
             out.close();
 
             return tempFile;
@@ -83,49 +105,11 @@ public class ImageUtils {
     }
 
     /**
-     * Mètode auxiliar per rotar un Bitmap segons la seva etiqueta d'orientació EXIF
-     *
-     * @param bitmap  La imatge original en memòria
-     * @param orientation El codi d'orientació EXIF
-     * @return Un nou Bitmap rotat correctament, o l'original si no calia rotació
-     */
-    private static Bitmap rotateBitmap(Bitmap bitmap, int orientation) {
-        Matrix matrix = new Matrix();
-        switch (orientation) {
-            case ExifInterface.ORIENTATION_ROTATE_90:
-                matrix.postRotate(90);
-                break;
-            case ExifInterface.ORIENTATION_ROTATE_180:
-                matrix.postRotate(180);
-                break;
-            case ExifInterface.ORIENTATION_ROTATE_270:
-                matrix.postRotate(270);
-                break;
-            default:
-                return bitmap; // No cal fer res, retornem l'original
-        }
-
-        try {
-            // Creem una nova imatge transformada segons la matriu de rotació
-            Bitmap rotated = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
-
-            // Si s'ha creat una còpia nova, reciclem la vella per estalviar memòria
-            if (rotated != bitmap) {
-                bitmap.recycle();
-            }
-            return rotated;
-        } catch (OutOfMemoryError e) {
-            Log.e("ImageUtils", "Memòria insuficient per rotar la imatge");
-            return bitmap;
-        }
-    }
-
-    /**
      * Helper per extreure el nom real del fitxer a partir de la URI de contingut
      */
     private static String getFileName(Context context, Uri uri) {
         String result = null;
-        if (uri.getScheme().equals("content")) {
+        if (uri.getScheme() != null && uri.getScheme().equals("content")) {
             try (Cursor cursor = context.getContentResolver().query(uri, null, null, null, null)) {
                 if (cursor != null && cursor.moveToFirst()) {
                     int index = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
