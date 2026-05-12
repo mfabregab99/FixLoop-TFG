@@ -46,6 +46,7 @@ import retrofit2.Response;
  * 3- Dades extra per a reparadors (Descripció, Categories)
  */
 public class RegisterActivity extends AppCompatActivity {
+    private com.google.android.gms.location.FusedLocationProviderClient fusedLocationClient;
 
     private ViewFlipper viewFlipper;
 
@@ -80,6 +81,7 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        fusedLocationClient = com.google.android.gms.location.LocationServices.getFusedLocationProviderClient(this);
 
         // Vinculació de vistes
         viewFlipper = findViewById(R.id.viewFlipper);
@@ -207,15 +209,37 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void performRegistration(boolean isReparadorStep3) {
+        // Comprovar permisos de localització
+        if (androidx.core.app.ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != android.content.pm.PackageManager.PERMISSION_GRANTED) {
+            androidx.core.app.ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 1000);
+            return;
+        }
+
+        // intentar obtenir la ubicació actual
+        fusedLocationClient.getLastLocation().addOnSuccessListener(this, location -> {
+            double lat = 0.0;
+            double lon = 0.0;
+
+            if (location != null) {
+                lat = location.getLatitude();
+                lon = location.getLongitude();
+                android.util.Log.d("FIXLOOP_GPS", "Ubicació obtinguda: " + lat + ", " + lon);
+            } else {
+                android.util.Log.e("FIXLOOP_GPS", "Ubicació null, enviant 0.0");
+                Toast.makeText(this, "No s'ha pogut obtenir la ubicació exacta", Toast.LENGTH_SHORT).show();
+            }
+
+            // Un cop tenim les dades, executem la crida a l'API
+            executeRegisterCall(isReparadorStep3, lat, lon);
+        });
+    }
+    private void executeRegisterCall(boolean isReparadorStep3, double lat, double lon) {
         String email = etEmail.getText().toString().trim();
         String name = etName.getText().toString().trim();
         String pass = etPassword.getText().toString().trim();
-
-        // Si venim del pas 3, agafem la descripció, si no buida
         String description = isReparadorStep3 ? etDescription.getText().toString().trim() : "";
         String type = isReparadorStep3 ? "reparador" : "client";
 
-        // Recollim categories seleccionades (IDs separats per comes)
         StringBuilder categoriesIds = new StringBuilder();
         if (isReparadorStep3) {
             for (CheckBox cb : categoryCheckBoxes) {
@@ -227,13 +251,16 @@ public class RegisterActivity extends AppCompatActivity {
         }
 
         // --- PREPARAR PETICIÓ MULTIPART ---
-        // Convertim strings a RequestBody per a Retrofit
         RequestBody rbEmail = RequestBody.create(MediaType.parse("text/plain"), email);
         RequestBody rbPass = RequestBody.create(MediaType.parse("text/plain"), pass);
         RequestBody rbName = RequestBody.create(MediaType.parse("text/plain"), name);
         RequestBody rbType = RequestBody.create(MediaType.parse("text/plain"), type);
         RequestBody rbDesc = RequestBody.create(MediaType.parse("text/plain"), description);
         RequestBody rbCats = RequestBody.create(MediaType.parse("text/plain"), categoriesIds.toString());
+
+        // CAMPS DE UBICACIÓ
+        RequestBody rbLat = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(lat));
+        RequestBody rbLon = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(lon));
 
         MultipartBody.Part bodyFoto = null;
         if (selectedImageUri != null) {
@@ -245,14 +272,13 @@ public class RegisterActivity extends AppCompatActivity {
         }
 
         // CRIDA A L'API
-        RetrofitClient.getInstance().getMyApi().register(rbEmail, rbPass, rbName, rbType, rbDesc, rbCats, bodyFoto)
+        RetrofitClient.getInstance().getMyApi().register(rbEmail, rbPass, rbName, rbType, rbDesc, rbCats, rbLat, rbLon, bodyFoto)
                 .enqueue(new Callback<AuthResponse>() {
                     @Override
                     public void onResponse(Call<AuthResponse> call, Response<AuthResponse> response) {
                         if (response.isSuccessful() && response.body() != null && response.body().isSuccess()) {
                             performAutoLogin(email, pass);
                         } else {
-                            // Si falla, mostrem el missatge del servidor
                             String errorMsg = response.body() != null ? response.body().getMessage() : "Error desconegut";
                             Toast.makeText(RegisterActivity.this, "Error registre: " + errorMsg, Toast.LENGTH_SHORT).show();
                         }
@@ -280,7 +306,7 @@ public class RegisterActivity extends AppCompatActivity {
                     startActivity(intent);
                     finish();
                 } else {
-                    // Si el login automàtic falla (no hauria), anem al login manual
+                    // Si el login automàtic falla, anem al login manual
                     startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
                     finish();
                 }

@@ -41,6 +41,8 @@ import retrofit2.Response;
 public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
+    private com.google.android.gms.location.FusedLocationProviderClient fusedLocationClient;
+    private android.location.Location myLocation; // Per guardar la posicio
 
     // Adaptadors
     private RepairerAdapter repairerAdapter;
@@ -74,6 +76,9 @@ public class HomeFragment extends Fragment {
         isRepairer = "reparador".equalsIgnoreCase(type);
 
         binding.rvReparadors.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        fusedLocationClient = com.google.android.gms.location.LocationServices.getFusedLocationProviderClient(requireContext());
+        obtenirMevaUbicacio();
 
         // --- CONFIGURACIÓ SEGONS ROL ---
         if (isRepairer) {
@@ -119,6 +124,47 @@ public class HomeFragment extends Fragment {
         loadCategories();
 
         return root;
+    }
+    private void obtenirMevaUbicacio() {
+        if (androidx.core.app.ActivityCompat.checkSelfPermission(requireContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != android.content.pm.PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 100);
+            return;
+        }
+
+        fusedLocationClient.getLastLocation().addOnSuccessListener(location -> {
+            if (location != null) {
+                myLocation = location;
+                // Si ja teníem reparadors carregats, recalculem
+                if (!allRepairersList.isEmpty()) {
+                    recalcularDistancies();
+                }
+            }
+        });
+    }
+    private void recalcularDistancies() {
+        if (myLocation == null || allRepairersList.isEmpty()) return;
+
+        for (User user : allRepairersList) {
+            // Només calculem si el reparador té coordenades vàlides
+            if (user.getLatitud() != 0 && user.getLongitud() != 0) {
+                float[] results = new float[1];
+                android.location.Location.distanceBetween(
+                        myLocation.getLatitude(), myLocation.getLongitude(),
+                        user.getLatitud(), user.getLongitud(),
+                        results
+                );
+
+                float metres = results[0];
+                String textDistancia;
+                if (metres < 1000) {
+                    textDistancia = Math.round(metres) + " m";
+                } else {
+                    textDistancia = String.format("%.1f km", metres / 1000);
+                }
+                user.setDistance(textDistancia);
+            }
+        }
+        repairerAdapter.notifyDataSetChanged();
     }
 
     // --- CÀRREGA DE CATEGORIES ---
@@ -197,6 +243,7 @@ public class HomeFragment extends Fragment {
                 if (response.isSuccessful() && response.body() != null) {
                     allRepairersList.clear();
                     allRepairersList.addAll(response.body());
+                    recalcularDistancies();
                     filterRepairers(); // Apliquem filtre inicial
                 }
             }

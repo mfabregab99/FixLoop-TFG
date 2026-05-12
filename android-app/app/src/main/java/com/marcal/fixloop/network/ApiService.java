@@ -60,6 +60,8 @@ public interface ApiService {
             @Part("tipus") RequestBody type,
             @Part("descripcio") RequestBody description,
             @Part("categories") RequestBody categories,
+            @Part("latitud") RequestBody lat,
+            @Part("longitud") RequestBody lon,
             @Part MultipartBody.Part photo
     );
 

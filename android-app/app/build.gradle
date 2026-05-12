@@ -1,10 +1,11 @@
 plugins {
     alias(libs.plugins.android.application)
+    id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
 }
 
 android {
     namespace 'com.marcal.fixloop'
-    compileSdk 34
+    compileSdk 37
 
     defaultConfig {
         applicationId "com.marcal.fixloop"
@@ -46,7 +47,9 @@ dependencies {
     implementation libs.navigation.fragment
     implementation libs.navigation.ui
     implementation libs.activity
+    implementation libs.play.services.location
     testImplementation libs.junit
     androidTestImplementation libs.ext.junit
     androidTestImplementation libs.espresso.core
+
 }

@@ -9,6 +9,7 @@ import com.google.gson.annotations.SerializedName;
 public class User {
 
     private int id;
+    private String distance;
 
 
     @SerializedName("nom_complet")
@@ -44,13 +45,15 @@ public class User {
     @SerializedName("categories_ids")
     private String categoriesIds;
 
-    // Latitud i Longitud (per al futur mapa)
+    // Latitud i Longitud
     private double latitud;
     private double longitud;
 
     // --- Getters i Setters ---
 
-    public String getDescription() { return description;}
+    public String getDescription() {
+        return description;
+    }
 
     public int getId() {
         return id;
@@ -102,5 +105,13 @@ public class User {
 
     public double getLongitud() {
         return longitud;
+    }
+
+    public String getDistance() {
+        return distance;
+    }
+
+    public void setDistance(String distance) {
+        this.distance = distance;
     }
 }

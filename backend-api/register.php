@@ -27,9 +27,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $password = $_POST['password'];
         $nom_complet = $_POST['nom_complet'];
         $tipus = $_POST['tipus'];
-        
         $descripcio = isset($_POST['descripcio']) ? $_POST['descripcio'] : "";
         $categories_str = isset($_POST['categories']) ? $_POST['categories'] : ""; 
+        $latitud = isset($_POST['latitud']) ? $_POST['latitud'] : 0;
+        $longitud = isset($_POST['longitud']) ? $_POST['longitud'] : 0;
+
+        write_log("Ubicació rebuda: Lat $latitud, Lon $longitud");
 
         write_log("Registre iniciat: $email ($tipus). Categories: $categories_str");
 
@@ -69,8 +72,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // --- INSERTAR USUARI ---
             $password_hash = password_hash($password, PASSWORD_DEFAULT);
             
-            $insert_stmt = $conn->prepare("INSERT INTO usuaris (email, password_hash, nom_complet, tipus, foto_perfil, descripcio) VALUES (?, ?, ?, ?, ?, ?)");
-            $insert_stmt->bind_param("ssssss", $email, $password_hash, $nom_complet, $tipus, $db_photo_name, $descripcio);
+            $insert_stmt = $conn->prepare("INSERT INTO usuaris (email, password_hash, nom_complet, tipus, foto_perfil, descripcio, latitud, longitud) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+            $insert_stmt->bind_param("ssssssdd", $email, $password_hash, $nom_complet, $tipus, $db_photo_name, $descripcio, $latitud, $longitud);
 
             if ($insert_stmt->execute()) {
                 $user_id = $insert_stmt->insert_id;

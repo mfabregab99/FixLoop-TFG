@@ -69,9 +69,12 @@ public class RepairerAdapter extends RecyclerView.Adapter<RepairerAdapter.Repair
             holder.tvCategory.setText("Reparador General");
         }
 
-        // Dades simulades per ara
-        holder.tvRating.setText("4.8 (12)");
-        holder.tvDistance.setText("• 2.5 km");
+        if (user.getDistance() != null) {
+            holder.tvDistance.setText("• " + user.getDistance());
+            holder.tvDistance.setVisibility(View.VISIBLE);
+        } else {
+            holder.tvDistance.setText(""); // O holder.tvDistance.setVisibility(View.GONE);
+        }
 
         // --- Lògica PRO ---
         if (user.isPro()) {
